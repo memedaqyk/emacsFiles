@@ -5,7 +5,7 @@
  (require 'cl)
 
  ;; Add Packages
- (defvar my/packages '(
+ (defvar kingle/packages '(
                 ;; --- Auto-completion ---
                 company
                 ;; --- Better Editor ---
@@ -26,17 +26,17 @@
 		popwin
                 ) "Default packages")
 
- (setq package-selected-packages my/packages)
+ (setq package-selected-packages kingle/packages)
 
- (defun my/packages-installed-p ()
-     (loop for pkg in my/packages
+ (defun kingle/packages-installed-p ()
+     (loop for pkg in kingle/packages
            when (not (package-installed-p pkg)) do (return nil)
            finally (return t)))
 
- (unless (my/packages-installed-p)
+ (unless (kingle/packages-installed-p)
      (message "%s" "Refreshing package database...")
      (package-refresh-contents)
-     (dolist (pkg my/packages)
+     (dolist (pkg kingle/packages)
        (when (not (package-installed-p pkg))
          (package-install pkg))))
 
@@ -58,7 +58,7 @@
 (global-hungry-delete-mode)
 
 
-(require 'smartparens-config)
+;;(require 'smartparens-config)
 ;;(add-hook 'emacs-lisp-mode-hook 'smartparens-mode)
 (smartparens-global-mode t)
 
@@ -79,6 +79,13 @@
 ;;popwin
 (require 'popwin) 
 (popwin-mode t)
+
+
+;;javascript
+(require 'nodejs-repl)
+;; let emacs could find the executable
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 
 (provide 'init-packages)
