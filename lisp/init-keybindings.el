@@ -1,4 +1,3 @@
-
 ;;config for swiper
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
@@ -28,4 +27,8 @@
 (global-set-key (kbd "C-h C-v") 'find-variable)
 (global-set-key (kbd "C-h C-k") 'find-function-on-key)
 
+(global-set-key (kbd "C-c p f") 'counsel-git)
+
+;; 设置 org-agenda 打开快捷键
+(global-set-key (kbd "C-c a") 'org-agenda)
 (provide 'init-keybindings)
