@@ -4,6 +4,8 @@
 ;;自动恢复加载
 (global-auto-revert-mode t)
 
+(set-language-environment "UTF-8")
+
 ;;缩写自动补全
 (setq-default abbrev-mode t)
 (define-abbrev-table 'global-abbrev-table '(
@@ -103,8 +105,28 @@
 	      (regexp-quote sym))))
 	regexp-history)
   (call-interactively 'occur))
-(global-set-key (kbd "M-s o") 'occur-dwim)
 
-(set-language-environment "UTF-8")
+;;这个功能除了可以记录待办事项还有其他许许多多的功能例如获取将当前浏览器中的 URL
+(defun kingle/insert-chrome-current-tab-url()
+  "Get the URL of the active tab of the first window"
+  (interactive)
+  (insert (kingle/retrieve-chrome-current-tab-url)))
+
+(defun kingle/retrieve-chrome-current-tab-url()
+  "Get the URL of the active tab of the first window"
+  (interactive)
+  (let ((result (do-applescript
+                 (concat
+                  "set frontmostApplication to path to frontmost application\n"
+                  "tell application \"Google Chrome\"\n"
+                  " set theUrl to get URL of active tab of first window\n"
+                  " set theResult to (get theUrl) \n"
+                  "end tell\n"
+                  "activate application (frontmostApplication as text)\n"
+                  "set links to {}\n"
+                  "copy theResult to the end of links\n"
+                  "return links as string\n"))))
+    (format "%s" (s-chop-suffix "\"" (s-chop-prefix "\"" result)))))
+
 
 (provide 'init-better-defaults)

@@ -22,7 +22,7 @@
 ;; 这个快捷键绑定可以用之后的插件 counsel 代替
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
-
+;;函数，变量详解
 (global-set-key (kbd "C-h C-f") 'find-function)
 (global-set-key (kbd "C-h C-v") 'find-variable)
 (global-set-key (kbd "C-h C-k") 'find-function-on-key)
@@ -46,5 +46,17 @@
 
 ;;Org-mode  下面的配置代码来设置一个模板
 (global-set-key (kbd "C-c r") 'org-capture)
+
+;;选中
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+;;js2r js文件操作的前缀
+(js2r-add-keybindings-with-prefix "C-c C-m")
+
+;;切换tab的长度
+(global-set-key (kbd "C-c t i") 'my-toggle-web-indent)
+
+;;正则匹配
+(global-set-key (kbd "M-s o") 'occur-dwim)
 
 (provide 'init-keybindings)

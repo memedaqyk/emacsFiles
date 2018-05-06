@@ -125,9 +125,7 @@
 (add-hook 'js2-mode-hook
 	  (lambda ()
 	    (setq imenu-create-index-function 'js2-imenu-make-index)))
-
-
-(global-set-key (kbd "C-=") 'er/expand-region)
 (require 'iedit)
+(require 'org-pomodoro)
 
 (provide 'init-packages)
