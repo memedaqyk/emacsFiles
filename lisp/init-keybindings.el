@@ -35,5 +35,9 @@
 ;;缩进格式化
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
+;;补全
+(global-set-key (kbd "s-/") 'hippie-expand)
+
+
 
 (provide 'init-keybindings)

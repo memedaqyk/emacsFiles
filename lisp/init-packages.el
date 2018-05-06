@@ -1,9 +1,13 @@
-(package-initialize)
-
+;(package-initialize)
 ;; 注意 elpa.emacs-china.org 是 Emacs China 中文社区在国内搭建的一个 ELPA 镜像
  ;; cl - Common Lisp Extension
  (require 'cl)
 
+ (when (>= emacs-major-version 24)
+     (require 'package)
+     (package-initialize)
+     (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+                      ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
  ;; Add Packages
  (defvar kingle/packages '(
                 ;; --- Auto-completion ---
@@ -22,8 +26,9 @@
                 ;; --- Themes ---
                 monokai-theme
                 ;; solarized-theme
-		spacemacs-theme
-		popwin
+	        	spacemacs-theme
+                reveal-in-osx-finder
+                popwin
                 ) "Default packages")
 
  (setq package-selected-packages kingle/packages)
@@ -47,11 +52,6 @@
 
 
 
- (when (>= emacs-major-version 24)
-     (require 'package)
-     (package-initialize)
-     (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-                      ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
 
 
 (require 'hungry-delete)
