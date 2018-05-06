@@ -38,6 +38,13 @@
 ;;补全
 (global-set-key (kbd "s-/") 'hippie-expand)
 
+;;搜索函数
+(global-set-key (kbd "M-s i") 'counsel-imenu)
 
+;;多行选中相同的词
+;;(global-set-key (kbd "M-s e") 'iedit-mode)
+
+;;Org-mode  下面的配置代码来设置一个模板
+(global-set-key (kbd "C-c r") 'org-capture)
 
 (provide 'init-keybindings)

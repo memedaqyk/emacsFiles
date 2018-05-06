@@ -8,6 +8,7 @@
  '(package-selected-packages
    (quote
     (monokai-theme exec-path-from-shell nodejs-repl js2-mode smartparens counsel swiper hungry-delete company)))
+ '(popwin:popup-window-position (quote right))
  '(spacemacs-theme-comment-bg t)
  '(spacemacs-theme-comment-italic t)
  '(spacemacs-theme-org-agenda-height t)
