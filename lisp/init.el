@@ -4,6 +4,12 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+
+(setq custom-file (expand-file-name "lisp/custom.el" user-emacs-directory))
+
+(load-file custom-file)
+
+
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
 ;; 快速打开配置文件
@@ -18,9 +24,5 @@
 (require 'init-org)
 
 
-
-(setq custom-file (expand-file-name "lisp/custom.el" user-emacs-directory))
-
-(load-file custom-file)
 
 

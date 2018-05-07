@@ -11,8 +11,13 @@
 ;; You may delete these explanatory comments.
 (package-initialize)			
 
+(require 'cask "/usr/local/Cellar/cask/0.8.3/cask.el")
+(cask-initialize)    
+(require 'pallet)
+(pallet-mode t)     
 (require 'org-install)
 (require 'ob-tangle)
 (org-babel-load-file (expand-file-name "kingle.org" user-emacs-directory))
+
 
 (put 'set-goal-column 'disabled nil)

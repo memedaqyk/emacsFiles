@@ -1,55 +1,63 @@
 ;; cl - Common Lisp Extension
 (require 'cl)
 
-(when (>= emacs-major-version 24)
-  (add-to-list 'package-archives '("melpa" . "http://elpa.emacs-china.org/melpa/") t)
-  )
-;; Add Packages
-(defvar kingle/packages '(
-			  company
-			  hungry-delete
-			  swiper
-			  counsel
-			  smartparens
-			  js2-mode
-			  nodejs-repl
-			  exec-path-from-shell
-			  monokai-theme
-			  spacemacs-theme
-			  reveal-in-osx-finder
-			  popwin
-			  web-mode
-			  js2-refactor
-			  expand-region
-			  iedit
-			  org-pomodoro
-			  helm-ag
-			  flycheck
-			  auto-yasnippet
-			  yasnippet-snippets
-			  evil
-			  evil-leader
-			  window-numbering
-			  evil-escape
-			  neotree
-			  youdao-dictionary
-			  evil-surround
-			  evil-nerd-commenter
-			  ) "Default packages")
+;;;(when (>= emacs-major-version 24)
+;;;  (add-to-list 'package-archives '("melpa" . "http://elpa.emacs-china.org/melpa/") t)
+;;;  )
 
-(setq package-selected-packages kingle/packages)
+;(when (>= emacs-major-version 24)
+  ;(add-to-list 'package-archives '("melpa" . "http://elpa.emacs-china.org/melpa") t)
+  ;)
 
-(defun kingle/packages-installed-p ()
-  (loop for pkg in kingle/packages
-	when (not (package-installed-p pkg)) do (return nil)
-	finally (return t)))
+;;; Add Packages
+;(defvar kingle/packages '(
+			  ;company
+			  ;hungry-delete
+			  ;swiper
+			  ;counsel
+			  ;smartparens
+			  ;js2-mode
+			  ;nodejs-repl
+			  ;exec-path-from-shell
+			  ;monokai-theme
+			  ;spacemacs-theme
+			  ;reveal-in-osx-finder
+			  ;popwin
+			  ;web-mode
+			  ;js2-refactor
+			  ;expand-region
+			  ;iedit
+			  ;org-pomodoro
+			  ;helm-ag
+			  ;flycheck
+			  ;auto-yasnippet
+			  ;yasnippet-snippets
+			  ;evil
+			  ;evil-leader
+			  ;window-numbering
+			  ;evil-escape
+			  ;neotree
+			  ;youdao-dictionary
+			  ;evil-surround
+			  ;evil-nerd-commenter
+			  ;which-key
+			  ;command-log-mode
+			  ;pallet
+			  ;) "Default packages")
 
-(unless (kingle/packages-installed-p)
-  (message "%s" "Refreshing package database...")
-  (package-refresh-contents)
-  (dolist (pkg kingle/packages)
-    (when (not (package-installed-p pkg))
-      (package-install pkg))))
+;(setq package-selected-packages kingle/packages)
+
+;(defun kingle/packages-installed-p ()
+  ;(loop for pkg in kingle/packages
+	;when (not (package-installed-p pkg)) do (return nil)
+	;finally (return t)))
+
+;(unless (kingle/packages-installed-p)
+  ;(message "%s" "Refreshing package database...")
+  ;(package-refresh-contents)
+  ;(dolist (pkg kingle/packages)
+    ;(when (not (package-installed-p pkg))
+      ;(package-install pkg))))
 
 ;; Find Executable Path on OS X
 (when (memq window-system '(mac ns))
@@ -163,13 +171,14 @@
   "ff" 'find-file
   "kk" 'kill-buffer
   "SPC" 'counsel-M-x
-  "ss" 'save-buffer
+  "ww" 'save-buffer
   "fr" 'recentf-open-files
   "pf" 'counsel-git
   "ps" 'helm-do-ag-project-root
   "bb" 'switch-to-buffer
   "m" 'evil-jump-item
   "pp" 'switch-to-prev-buffer
+  "nn" 'switch-to-next-buffer
   "tt" 'neotree-toggle
   "q" 'evil-buffer
   "a" 'evil-first-non-blank
@@ -184,7 +193,7 @@
   "w-" 'split-window-below
   "wm" 'delete-other-windows
   "q" 'save-buffers-kill-terminal
-  )
+  ) 
 
 (define-key evil-normal-state-map (kbd ",/") 'evilnc-comment-or-uncomment-lines)
 (define-key evil-visual-state-map (kbd ",/") 'evilnc-comment-or-uncomment-lines)
@@ -193,8 +202,8 @@
 (window-numbering-mode 1)
 
 ;;powerline
-(require 'powerline)
-(powerline-default-theme)
+;;(require 'powerline)
+;;(powerline-default-theme)
 
 ;; Enable Cache youdaoyun
 (setq url-automatic-caching t)
@@ -210,5 +219,31 @@
 
 ;;evil-nerd-commenter
 (evilnc-default-hotkeys t)
+
+;;Made some modes to use emacs-state
+(dolist (mode '(ag-mode
+		flycheck-error-list-mode
+		git-rebase-mode))
+  (add-to-list 'evil-emacs-state-modes mode))
+
+;;在occur-mode下依然能用j, k
+(add-hook 'occur-mode-hook
+          (lambda ()
+            (evil-add-hjkl-bindings occur-mode-map 'emacs
+              (kbd "/")       'evil-search-forward
+              (kbd "n")       'evil-search-next
+              (kbd "N")       'evil-search-previous
+              (kbd "C-d")     'evil-scroll-down
+              (kbd "C-u")     'evil-scroll-up
+              )))
+
+;;which-key-mode
+(which-key-mode 1)
+(which-key-setup-side-window-right)
+
+;(pallet-mode)  
+;(pallet-init)    ; 在.emacs.d 中生成一个 Cask 文件, 写入源与现有包
+;(pallet-install) ; 将 elpa 中的 package 拷贝到.Cask/<you version>/elpa 目录中
+
 
 (provide 'init-packages)

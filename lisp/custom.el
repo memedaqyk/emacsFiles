@@ -9,12 +9,13 @@
  '(evil-want-C-u-scroll t)
  '(package-selected-packages
    (quote
-    (monokai-theme exec-path-from-shell nodejs-repl js2-mode smartparens counsel swiper hungry-delete company)))
+    (magit goto-chg helm-core multiple-cursors pkg-info s company hungry-delete swiper counsel smartparens js2-mode nodejs-repl exec-path-from-shell monokai-theme spacemacs-theme reveal-in-osx-finder popwin web-mode js2-refactor expand-region iedit org-pomodoro helm-ag flycheck auto-yasnippet yasnippet-snippets evil evil-leader window-numbering evil-escape neotree youdao-dictionary evil-surround evil-nerd-commenter which-key command-log-mode pallet)))
  '(popwin:popup-window-position (quote right))
  '(spacemacs-theme-comment-bg t)
  '(spacemacs-theme-comment-italic t)
  '(spacemacs-theme-org-agenda-height t)
- '(spacemacs-theme-org-highlight t))
+ '(spacemacs-theme-org-highlight t)
+ '(which-key-frame-max-height 60))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
