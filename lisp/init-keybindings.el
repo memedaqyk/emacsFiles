@@ -27,7 +27,7 @@
 (global-set-key (kbd "C-h C-v") 'find-variable)
 (global-set-key (kbd "C-h C-k") 'find-function-on-key)
 
-(global-set-key (kbd "C-c p f") 'counsel-git)
+;;(global-set-key (kbd "C-c p f") 'counsel-git)
 
 ;; 设置 org-agenda 打开快捷键
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -76,5 +76,14 @@
 ;;(C-c C-e)
 
 ;;ag 搜索工程文件夹内容
-(global-set-key (kbd "C-c p s") 'helm-do-ag-project-root)
+;;(global-set-key (kbd "C-c p s") 'helm-do-ag-project-root)
+
+;;auto-yasnippet 也是一个非常好用代码块补全插件。安装并未其设置快捷键
+(global-set-key (kbd "C-c h w") #'aya-create)
+(global-set-key (kbd "C-c h y") #'aya-expand)
+
+
+;;修改默认
+(global-set-key (kbd "C-w") 'backward-kill-word)
+
 (provide 'init-keybindings)

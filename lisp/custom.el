@@ -5,6 +5,8 @@
  ;; If there is more than one, they won't work right.
  '(company-idle-delay 0.02)
  '(company-minimum-prefix-length 1)
+ '(evil-leader/leader "SPC")
+ '(evil-want-C-u-scroll t)
  '(package-selected-packages
    (quote
     (monokai-theme exec-path-from-shell nodejs-repl js2-mode smartparens counsel swiper hungry-delete company)))

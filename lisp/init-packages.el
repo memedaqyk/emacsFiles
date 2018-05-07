@@ -24,6 +24,17 @@
 			  iedit
 			  org-pomodoro
 			  helm-ag
+			  flycheck
+			  auto-yasnippet
+			  yasnippet-snippets
+			  evil
+			  evil-leader
+			  window-numbering
+			  evil-escape
+			  neotree
+			  youdao-dictionary
+			  evil-surround
+			  evil-nerd-commenter
 			  ) "Default packages")
 
 (setq package-selected-packages kingle/packages)
@@ -128,5 +139,76 @@
 	    (setq imenu-create-index-function 'js2-imenu-make-index)))
 (require 'iedit)
 (require 'org-pomodoro)
+
+
+;;激活flycheck
+(add-hook 'js2-mode-hook 'flycheck-mode)
+
+;;yasnippet激活
+(add-to-list 'load-path
+	     "~/.emacs.d/plugins/yasnippet")
+(require 'yasnippet)
+(yas-global-mode 1)
+(yas-reload-all)
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+
+(evil-mode 1)
+(setcdr evil-insert-state-map nil)
+(define-key evil-insert-state-map [escape] 'evil-normal-state)
+;;(setq-default evil-want-C-u-scroll t)
+
+;;evil-leader
+(global-evil-leader-mode)
+(evil-leader/set-key
+  "ff" 'find-file
+  "kk" 'kill-buffer
+  "SPC" 'counsel-M-x
+  "ss" 'save-buffer
+  "fr" 'recentf-open-files
+  "pf" 'counsel-git
+  "ps" 'helm-do-ag-project-root
+  "bb" 'switch-to-buffer
+  "m" 'evil-jump-item
+  "pp" 'switch-to-prev-buffer
+  "tt" 'neotree-toggle
+  "q" 'evil-buffer
+  "a" 'evil-first-non-blank
+  "e" 'evil-end-of-line
+  "yy" 'youdao-dictionary-search-at-point
+  "yd" 'youdao-dictionary-search
+  "0"  'select-window-0
+  "1"  'select-window-1
+  "2"  'select-window-2
+  "3"  'select-window-3
+  "w/" 'split-window-right
+  "w-" 'split-window-below
+  "wm" 'delete-other-windows
+  "q" 'save-buffers-kill-terminal
+  )
+
+(define-key evil-normal-state-map (kbd ",/") 'evilnc-comment-or-uncomment-lines)
+(define-key evil-visual-state-map (kbd ",/") 'evilnc-comment-or-uncomment-lines)
+
+;;激活 以便使用alt-0, alt-1
+(window-numbering-mode 1)
+
+;;powerline
+(require 'powerline)
+(powerline-default-theme)
+
+;; Enable Cache youdaoyun
+(setq url-automatic-caching t)
+
+;; evil-escape
+(require 'evil-escape)
+(setq-default evil-escape-key-sequence "kj")
+(setq-default evil-escape-delay 0)
+
+;; evil-surround
+(require 'evil-surround)
+(global-evil-surround-mode)
+
+;;evil-nerd-commenter
+(evilnc-default-hotkeys t)
 
 (provide 'init-packages)
