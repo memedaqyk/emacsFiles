@@ -7,8 +7,8 @@
 (global-set-key (kbd "C-h f") 'counsel-describe-function)
 (global-set-key (kbd "C-h v") 'counsel-describe-variable)
 (global-set-key (kbd "<f1> l") 'counsel-find-library)
-;;(global-set-key (kbd "<f4> i") 'counsel-info-lookup-symbol)
-;;(global-set-key (kbd "<f4> u") 'counsel-unicode-char)
+(global-set-key (kbd "<f1> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f1> u") 'counsel-unicode-char)
 (global-set-key (kbd "C-c g") 'counsel-git)
 (global-set-key (kbd "C-c j") 'counsel-git-grep)
 (global-set-key (kbd "C-c k") 'counsel-ag)
@@ -59,4 +59,22 @@
 ;;正则匹配
 (global-set-key (kbd "M-s o") 'occur-dwim)
 
+
+;;在finder中打开
+(global-set-key (kbd "C-c z") 'reveal-in-osx-finder)
+
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "M-n") nil)
+  (define-key company-active-map (kbd "M-p") nil)
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
+
+;;批量编辑文件
+;;(C-x C-q)
+
+;;编辑ag搜索出来的名字
+;;(C-c C-e)
+
+;;ag 搜索工程文件夹内容
+(global-set-key (kbd "C-c p s") 'helm-do-ag-project-root)
 (provide 'init-keybindings)
