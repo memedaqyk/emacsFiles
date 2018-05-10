@@ -1,67 +1,19 @@
-;; cl - Common Lisp Extension
-(require 'cl)
+;;如果我们启用 exec-path-from-shell , 在 emacs 启动时可能会提示 PATH 变量重复定义
+(use-package exec-path-from-shell
+  :ensure t
+  :pin melpa-stable
+  :if (and (eq system-type 'darwin) (display-graphic-p))
+  :config
+  (progn
+    (when (string-match-p "/zsh$" (getenv "SHELL"))
+      ;; Use a non-interactive login shell.  A login shell, because my
+      ;; environment variables are mostly set in `.zprofile'.
+      (setq exec-path-from-shell-arguments '("-l")))
 
-;;;(when (>= emacs-major-version 24)
-;;;  (add-to-list 'package-archives '("melpa" . "http://elpa.emacs-china.org/melpa/") t)
-;;;  )
+    (exec-path-from-shell-initialize)
+    )
+  )
 
-;(when (>= emacs-major-version 24)
-  ;(add-to-list 'package-archives '("melpa" . "http://elpa.emacs-china.org/melpa") t)
-  ;)
-
-;;; Add Packages
-;(defvar kingle/packages '(
-			  ;company
-			  ;hungry-delete
-			  ;swiper
-			  ;counsel
-			  ;smartparens
-			  ;js2-mode
-			  ;nodejs-repl
-			  ;exec-path-from-shell
-			  ;monokai-theme
-			  ;spacemacs-theme
-			  ;reveal-in-osx-finder
-			  ;popwin
-			  ;web-mode
-			  ;js2-refactor
-			  ;expand-region
-			  ;iedit
-			  ;org-pomodoro
-			  ;helm-ag
-			  ;flycheck
-			  ;auto-yasnippet
-			  ;yasnippet-snippets
-			  ;evil
-			  ;evil-leader
-			  ;window-numbering
-			  ;evil-escape
-			  ;neotree
-			  ;youdao-dictionary
-			  ;evil-surround
-			  ;evil-nerd-commenter
-			  ;which-key
-			  ;command-log-mode
-			  ;pallet
-			  ;) "Default packages")
-
-;(setq package-selected-packages kingle/packages)
-
-;(defun kingle/packages-installed-p ()
-  ;(loop for pkg in kingle/packages
-	;when (not (package-installed-p pkg)) do (return nil)
-	;finally (return t)))
-
-;(unless (kingle/packages-installed-p)
-  ;(message "%s" "Refreshing package database...")
-  ;(package-refresh-contents)
-  ;(dolist (pkg kingle/packages)
-    ;(when (not (package-installed-p pkg))
-      ;(package-install pkg))))
-
-;; Find Executable Path on OS X
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
 
 ;;(require 'hungry-delete)
 (global-hungry-delete-mode)
@@ -169,31 +121,31 @@
 (global-evil-leader-mode)
 (evil-leader/set-key
   "ff" 'find-file
-  "kk" 'kill-buffer
+  ;;"kk" 'kill-buffer
   "SPC" 'counsel-M-x
-  "ww" 'save-buffer
+  "w" 'save-buffer
   "fr" 'recentf-open-files
   "pf" 'counsel-git
   "ps" 'helm-do-ag-project-root
-  "bb" 'switch-to-buffer
+  "b" 'switch-to-buffer
   "m" 'evil-jump-item
   "pp" 'switch-to-prev-buffer
   "nn" 'switch-to-next-buffer
   "tt" 'neotree-toggle
-  "q" 'evil-buffer
   "a" 'evil-first-non-blank
   "e" 'evil-end-of-line
   "yy" 'youdao-dictionary-search-at-point
   "yd" 'youdao-dictionary-search
-  "0"  'select-window-0
   "1"  'select-window-1
   "2"  'select-window-2
   "3"  'select-window-3
-  "w/" 'split-window-right
-  "w-" 'split-window-below
-  "wm" 'delete-other-windows
-  "q" 'save-buffers-kill-terminal
-  ) 
+  "|" 'split-window-right
+  "-" 'split-window-below
+  "d" 'delete-other-windows
+  "q" 'delete-window
+  "kk" 'save-buffers-kill-terminal
+  "i" 'anaconda-mode-complete
+  )
 
 (define-key evil-normal-state-map (kbd ",/") 'evilnc-comment-or-uncomment-lines)
 (define-key evil-visual-state-map (kbd ",/") 'evilnc-comment-or-uncomment-lines)
@@ -241,9 +193,22 @@
 (which-key-mode 1)
 (which-key-setup-side-window-right)
 
-;(pallet-mode)  
-;(pallet-init)    ; 在.emacs.d 中生成一个 Cask 文件, 写入源与现有包
-;(pallet-install) ; 将 elpa 中的 package 拷贝到.Cask/<you version>/elpa 目录中
+;;然后确保在 company-backends 中有 company-anaconda 这个后端即可
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook
+          (lambda ()
+            (set (make-local-variable 'company-backends) '((company-anaconda company-dabbrev-code)
+                                                           company-dabbrev)))
+          )
+;; For elpy
+(elpy-enable)
+
+(setq python-shell-interpreter "/Users/kingle/anaconda/bin/ipython"
+      python-shell-interpreter-args "--simple-prompt -i")
+
+(setq tramp-ssh-controlmaster-options
+      "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
+
 
 
 (provide 'init-packages)
